@@ -478,12 +478,22 @@ PWD is not in a git repo (or the git command is not found)."
 ;;;; ----------------------------------------------------------------------
 
 ;;;
+;;; undo-tree.el
+;;; -----------------------------------------------
+(when (require 'undo-tree nil t)
+  (global-undo-tree-mode t)
+  (global-set-key (kbd "C--") 'undo-tree-undo)
+  (global-set-key (kbd "M--") 'undo-tree-redo)
+)
+
+;;;
 ;;; anything.el
 ;;; -----------------------------------------------
 (when (require 'anything-config nil t)
   ;; key bindings
   (global-set-key (kbd "C-x C-b") 'anything-filelist+)
   (global-set-key (kbd "M-y") 'anything-show-kill-ring)
+  (global-set-key (kbd "M-x") 'anything-M-x)
 
   ;; filelist
   (setq anything-c-filelist-file-name "/tmp/all.filelist")
@@ -495,6 +505,7 @@ PWD is not in a git repo (or the git command is not found)."
   ;; delay
   (setq anything-idle-delay 0.1)
   (setq anything-input-idle-delay 0.1)
+
 )
 
 ;;;
