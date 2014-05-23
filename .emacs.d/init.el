@@ -621,6 +621,8 @@ PWD is not in a git repo (or the git command is not found)."
     )
   (add-hook 'web-mode-hook 'web-mode-hook)
   
+  (add-to-list 'auto-mode-alist '("\\.tpl$" . web-mode))
+
   ;; color 
   (custom-set-faces
    '(web-mode-doctype-face
