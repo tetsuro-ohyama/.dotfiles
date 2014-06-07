@@ -117,7 +117,7 @@
    " "
    ;; Position, including warning for 80 columns
    (:propertize "%4l" face mode-line-position-face)
-   (:propertize "/" face mode-line-delim-face-1)
+   (:propertize " /" face mode-line-delim-face-1)
    (:eval
     (number-to-string (count-lines (point-min) (point-max))))
    " "
