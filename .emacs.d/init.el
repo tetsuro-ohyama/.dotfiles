@@ -250,6 +250,73 @@
 		    :inherit 'mode-line-face
 		    :foreground "white")
 
+;;; 
+;;; Others
+;;; -----------------------------------------------
+
+;; indent
+(setq tab-width 4)
+(setq indent-tabs-mode nil)
+
+;; Don't make backup files
+(setq make-backup-files nil) ; *.~
+(setq auto-save-default nil) ; #*.#
+(setq auto-save-list-file-name nil)
+(setq auto-save-list-file-prefix nil)
+
+;; auto revert-buffer
+(global-auto-revert-mode 1)
+
+;; 補完時に大文字小文字を区別しない
+(setq completion-ignore-case t)
+(custom-set-variables '(read-file-name-completion-ignore-case t))
+
+;; 同名ファイルをフォルダで識別
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'post-forward-angle-brackets)
+
+;; 行番号表示
+(global-linum-mode)
+(setq linum-format "%4d")
+
+;; ファイルを管理者権限で開く
+(defun th-rename-tramp-buffer ()
+  (when (file-remote-p (buffer-file-name))
+    (rename-buffer
+     (format "%s:%s"
+             (file-remote-p (buffer-file-name) 'method)
+             (buffer-name)))))
+
+(add-hook 'find-file-hook
+          'th-rename-tramp-buffer)
+
+(defadvice find-file (around th-find-file activate)
+  "Open FILENAME using tramp's sudo method if it's read-only."
+  (if (and (not (file-writable-p (ad-get-arg 0)))
+           (y-or-n-p (concat "File "
+                             (ad-get-arg 0)
+                             " is read-only.  Open it as root? ")))
+      (th-find-file-sudo (ad-get-arg 0))
+    ad-do-it))
+
+(defun th-find-file-sudo (file)
+  "Opens FILE with root privileges."
+  (interactive "F")
+  (set-buffer (find-file (concat "/sudo::" file))))
+
+;; shared clipboard for tmux
+(defun copy-from-osx ()
+  (shell-command-to-string "pbpaste"))
+
+(defun paste-to-osx (text &optional push)
+  (let ((process-connection-type nil))
+    (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
+      (process-send-string proc text)
+      (process-send-eof proc))))
+
+(setq interprogram-cut-function 'paste-to-osx)
+(setq interprogram-paste-function 'copy-from-osx)
+
 ;;;; ----------------------------------------------------------------------
 ;;;; Packages
 ;;;; ----------------------------------------------------------------------
