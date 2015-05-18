@@ -1,0 +1,24 @@
+"*":
+  editor:
+    fontSize: 12
+    invisibles:
+      {}
+    showIndentGuide: true
+    showInvisibles: true
+  core:
+    themes: [
+      "one-dark-ui"
+      "one-dark-syntax"
+    ]
+  "exception-reporting":
+    userId: "aaf033eb-c001-d4b6-5f06-b319e4e25661"
+  welcome:
+    showOnStartup: false
+  "SFTP-deployment":
+    {}
+  "project-manager":
+    closeCurrent: true
+  "autocomplete-plus":
+    {}
+  linter:
+    {}

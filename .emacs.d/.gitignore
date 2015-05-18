@@ -1,0 +1,8 @@
+.DS_Store
+*.elc
+ac-comphist.dat
+tramp
+/eshell/history
+/eshell/lastdir
+/eshell/shellenv.el
+/elisp/shellenv.el
